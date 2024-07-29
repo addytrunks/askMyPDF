@@ -7,7 +7,9 @@ import {
   ServerCogIcon,
   ZapIcon,
 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
+
 const features = [
   {
     name: "Store your PDF Documents",
@@ -77,6 +79,22 @@ export default function Home() {
           <Button asChild className="mt-10">
             <Link href="/dashboard">Get Started</Link>
           </Button>
+
+          <div className="relative overflow-hidden pt-16">
+            <div className="mx-auto max-w-7xl px-6 lg:px-8">
+              {/* TODO: CHANGE IMAGE SCREENSHOT */}
+              <Image
+                alt="App screenshot"
+                src="https://i.imgur.com/VciRSTI.jpeg"
+                width={2432}
+                height={1442}
+                className="mb-[-0%] rounded-xl shadow-2xl ring-1 ring-gray-900/10"
+              />
+              <div aria-hidden="true" className="relative">
+                <div className="absolute -inset-x-32 bottom-0 bg-gradient-to-t from-white/50 pt-[5%]"></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </main>
