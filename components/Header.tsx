@@ -21,7 +21,7 @@ const Header = () => {
           </Button>
 
           <Button asChild variant="outline" className="border-indigo-600">
-            <Link href="/dashboard/upgrade">
+            <Link href="/dashboard/upload">
               <FilePlus className="text-indigo-600" />
             </Link>
           </Button>
