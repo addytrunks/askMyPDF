@@ -1,7 +1,8 @@
 "use client";
 
 import { useCallback } from "react";
-import { useDropzone } from "react-dropzone";
+import { useToast } from "@/components/ui/use-toast";
+import { FileRejection, useDropzone } from "react-dropzone";
 import {
   CheckCircleIcon,
   CircleArrowDown,
@@ -9,14 +10,47 @@ import {
   RocketIcon,
   SaveIcon,
 } from "lucide-react";
+import { MAX_FILE_SIZE } from "@/constants";
 
 const FileUploader = () => {
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    console.log(acceptedFiles)
-  }, []);
+  const { toast } = useToast();
+  const onDrop = useCallback(
+    (acceptedFiles: File[], fileRejections: FileRejection[]) => {
+      fileRejections.forEach(({ file, errors }) => {
+        errors.forEach(({ code }) => {
+          if (code === "file-too-large") {
+            toast({
+              title: "File too large",
+              variant: "destructive",
+              description: `The file is too large, please upload a file smaller than ${Math.floor(
+                MAX_FILE_SIZE / 1000000
+              )}MB`,
+            });
+          } else if (code === "file-invalid-type") {
+            toast({
+              title: "Invalid file type",
+              variant: "destructive",
+              description: 'The file is not a PDF. Please upload a PDF file',
+            });
+          }
+        });
+      });
+
+      if (acceptedFiles.length > 0) {
+        console.log("File uploaded successfully");
+      }
+    },
+    [toast]
+  );
+
   const { getRootProps, getInputProps, isDragActive, isFocused, isDragAccept } =
     useDropzone({
       onDrop,
+      accept: {
+        "application/pdf": [".pdf"],
+      },
+      maxFiles: 1,
+      maxSize: MAX_FILE_SIZE,
     });
   return (
     <div className="flex flex-col gap-4 items-center max-w-7xl mx-auto">
