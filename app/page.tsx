@@ -60,7 +60,7 @@ export default function Home() {
             </h2>
 
             <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-              Transform Your PDFs into Interactive Conversations
+              Transform Your PDFs into <span className="text-indigo-600">Interactive</span> Conversations
             </p>
 
             <p>
