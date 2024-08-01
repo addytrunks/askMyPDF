@@ -36,7 +36,7 @@ const FileUploader = () => {
         });
       });
 
-      if (acceptedFiles.length > 0) {
+      if (acceptedFiles.length === 1) {
         console.log("File uploaded successfully");
       }
     },
