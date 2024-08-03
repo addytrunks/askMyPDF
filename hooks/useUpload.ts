@@ -1,5 +1,6 @@
 "use client";
 
+import { generateEmbeddings } from "@/actions/generateEmbeddings";
 import { db, storage } from "@/firebase";
 import { useUser } from "@clerk/nextjs";
 import { doc, setDoc } from "firebase/firestore";
@@ -38,8 +39,8 @@ function useUpload() {
       "state_changed",
       (snapshot) => {
         const percent = Math.round(
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          );
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
         setStatus(StatusText.UPLOADING);
         setProgress(percent);
       },
@@ -62,6 +63,7 @@ function useUpload() {
         });
 
         setStatus(StatusText.GENERATING);
+        await generateEmbeddings(fileIdToUploadTo);
 
         setFileId(fileIdToUploadTo);
       }
