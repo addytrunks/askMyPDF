@@ -168,7 +168,7 @@ export async function generateLangchainCompletion(
   // Fetch the chat history from the database
   const chatHistory = await fetchMessagesFromDB(docId);
 
-  // Define a prompt template for generating search queries based on conversation history
+  // Define a prompt template to generate search query to extract relevant doc(s) based on conversation history
   console.log("--- Defining a prompt template... ---");
   const historyAwarePrompt = ChatPromptTemplate.fromMessages([
     ...chatHistory, // Insert the actual chat history here
@@ -180,7 +180,7 @@ export async function generateLangchainCompletion(
     ],
   ]);
 
-  // Create a history-aware retriever chain that uses the model, retriever, and prompt
+  // Create a history-aware retriever chain that uses the model, retriever, and prompt. (This retrieves relevant documents based on the conversation history)
   console.log("--- Creating a history-aware retriever chain... ---");
   const historyAwareRetrieverChain = await createHistoryAwareRetriever({
     llm: model,
