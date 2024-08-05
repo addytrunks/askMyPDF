@@ -193,7 +193,7 @@ export async function generateLangchainCompletion(
   const historyAwareRetrievalPrompt = ChatPromptTemplate.fromMessages([
     [
       "system",
-      "Answer the user's questions based on the below context:\n\n{context}",
+      "Answer the user's questions based on the below context in markdown format:\n\n{context}",
     ],
 
     ...chatHistory, // Insert the actual chat history here
