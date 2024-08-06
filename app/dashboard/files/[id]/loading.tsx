@@ -6,7 +6,7 @@ export default function Loading() {
       >
         <svg
           aria-hidden="true"
-          className="my-auto inline w-18 h-w-18 mr-2 text-gray-500 animate-spin fill-indigo-600"
+          className="my-auto inline w-8 h-8 mr-2 text-gray-500 animate-spin fill-indigo-600"
           viewBox="0 0 100 101"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
