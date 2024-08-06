@@ -193,7 +193,7 @@ export async function generateLangchainCompletion(
   const historyAwareRetrievalPrompt = ChatPromptTemplate.fromMessages([
     [
       "system",
-      "Answer the user's questions based on the below context in markdown format:\n\n{context}",
+      "Welcome to our intelligent document retrieval and question-answering system. Your task is to assist the user by providing accurate and contextually relevant answers based on the provided document context. Please ensure that your responses are formatted in markdown for better readability.\n\nHere are your instructions:\n\n1. Carefully read the context provided below, which contains excerpts from various documents.\n2. Generate comprehensive and concise answers to the user's questions based solely on the information contained in the context.\n3. Format your responses in markdown to enhance clarity and presentation.\n4. At the end of each response,include a citation indicating the specific page number from the document the user uploaded. This will help the user verify and refer back to the original document.\n\nPlease see the document context below:\n\n{context}",
     ],
 
     ...chatHistory, // Insert the actual chat history here
