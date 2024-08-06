@@ -14,10 +14,9 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/b
 
 const PDFView = ({ url }: { url: string }) => {
   const [numPages, setNumPages] = useState<number>();
-  const [pageNumber, setPageNumber] = useState<number>(1);
   const [file, setFile] = useState<Blob | null>(null);
   const [rotation, setRotation] = useState<number>(0);
-  const [scale, setScale] = useState<number>(1);
+  const [scale, setScale] = useState<number>(1.2);
 
   useEffect(() => {
     const fetchFile = async () => {
@@ -31,47 +30,17 @@ const PDFView = ({ url }: { url: string }) => {
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }): void => {
     setNumPages(numPages);
   };
+
   return (
     <div className="flex flex-col justify-center items-center min-h-screen">
       <div className="sticky top-0 z-50 bg-gray-100/80 backdrop-blur-md p-2 rounded-b-l shadow-md ">
-        <div className="max-w-6xl px-2 grid grid-cols-6 gap-2">
-          <Button
-            variant="outline"
-            disabled={pageNumber === 1}
-            onClick={() => {
-              if (pageNumber > 1) {
-                setPageNumber(pageNumber - 1);
-              }
-            }}
-          >
-            Previous
-          </Button>
-
-          <p className="flex items-center justify-center">
-            {pageNumber} of {numPages}
-          </p>
-
-          <Button
-            variant="outline"
-            disabled={pageNumber === numPages}
-            onClick={() => {
-              if (numPages) {
-                if (pageNumber < numPages) {
-                  setPageNumber(pageNumber + 1);
-                }
-              }
-            }}
-          >
-            Next
-          </Button>
-
+        <div className="max-w-6xl px-2 grid grid-cols-3 gap-2">
           <Button
             variant="outline"
             onClick={() => setRotation((rotation + 90) % 360)}
           >
             <RotateCw />
           </Button>
-
           <Button
             variant="outline"
             disabled={scale >= 1.5}
@@ -81,7 +50,6 @@ const PDFView = ({ url }: { url: string }) => {
           >
             <ZoomInIcon />
           </Button>
-
           <Button
             variant="outline"
             disabled={scale <= 0.75}
@@ -96,14 +64,23 @@ const PDFView = ({ url }: { url: string }) => {
           <Loader2Icon className="animate-spin h-16 w-16 text-indigo-600 mt-20" />
         </div>
       ) : (
-        <Document
-          file={file}
-          onLoadSuccess={onDocumentLoadSuccess}
-          rotate={rotation}
-          className="m-4 overflow-scroll"
-        >
-          <Page pageNumber={pageNumber} scale={scale} className="shadow-lg" />
-        </Document>
+        <div className="flex items-center justify-center min-h-screen overflow-y-scroll h-full w-full">
+          <Document
+            file={file}
+            onLoadSuccess={onDocumentLoadSuccess}
+            rotate={rotation}
+            className="m-4 overflow-scroll"
+          >
+            {Array.from(new Array(numPages), (el, index) => (
+              <Page
+                key={`page_${index + 1}`}
+                pageNumber={index + 1}
+                scale={scale}
+                className="shadow-lg mb-4"
+              />
+            ))}
+          </Document>
+        </div>
       )}
     </div>
   );
