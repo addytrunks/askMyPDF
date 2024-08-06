@@ -3,9 +3,20 @@
 import { useRouter } from "next/navigation";
 import byteSize from "byte-size";
 import { Button } from "./ui/button";
-import { DownloadCloud, Trash2Icon } from "lucide-react";
+import { DownloadCloud, Loader2Icon, Trash2Icon } from "lucide-react";
 import { deleteDocument } from "@/actions/deleteDocument";
 import { useTransition } from "react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "./ui/alert-dialog";
 
 const Document = ({
   id,
@@ -37,26 +48,48 @@ const Document = ({
       </div>
 
       <div className="flex space-x-2 justify-end">
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button
+              variant="outline"
+              className="hover:border-2 hover:border-red-500 "
+              disabled={isDeleting}
+            >
+              <div className="flex items-center space-x-2">
+                {isDeleting && <Loader2Icon className="w-6 h-6 animate-spin" />}
+                <Trash2Icon className="h-6 w-6 text-red-500" />
+              </div>
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                Are you sure you want to delete this document? This action
+                cannot be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                className="bg-red-500 hover:bg-red-600"
+                onClick={() => {
+                  startTransaction(async () => {
+                    await deleteDocument(id);
+                  });
+                }}
+              >
+                Continue
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+
         <Button
           variant="outline"
-          disabled={isDeleting}
-          onClick={() => {
-            const prompt = window.confirm(
-              "Are you sure you want to delete this document?"
-            );
-
-            if (prompt) {
-              // delete document
-              startTransaction(async () => {
-                await deleteDocument(id);
-              });
-            }
-          }}
+          className="hover:border-2 hover:border-indigo-400"
+          asChild
         >
-          <Trash2Icon className="h-6 w-6 text-red-500" />
-        </Button>
-
-        <Button variant="outline" asChild>
           <a href={downloadUrl}>
             <DownloadCloud className="h-6 w-6 text-indigo-600" />
           </a>
