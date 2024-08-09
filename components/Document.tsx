@@ -17,6 +17,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "./ui/alert-dialog";
+import { useToast } from "./ui/use-toast";
 
 const Document = ({
   id,
@@ -31,6 +32,7 @@ const Document = ({
 }) => {
   const router = useRouter();
   const [isDeleting, startTransaction] = useTransition();
+  const { toast } = useToast();
   return (
     <div className="flex flex-col w-64 h-80 rounded-xl bg-white drop-shadow-md justify-between p-4 transition-all transform hover:scale-105 hover:bg-indigo-600 hover:text-white cursor-pointer group">
       <div
@@ -76,6 +78,11 @@ const Document = ({
                 onClick={() => {
                   startTransaction(async () => {
                     await deleteDocument(id);
+                  });
+                  toast({
+                    title: "Document deleted",
+                    description: "Your document has been deleted successfully",
+                    variant: "default",
                   });
                 }}
               >
