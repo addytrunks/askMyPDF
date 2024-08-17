@@ -3,7 +3,7 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAcYMxNLTRneFRBKS2__eAxLmgEJ-y_Erg",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY as string,
   authDomain: "askmypdf-b3b09.firebaseapp.com",
   projectId: "askmypdf-b3b09",
   storageBucket: "askmypdf-b3b09.appspot.com",
