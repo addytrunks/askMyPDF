@@ -1,6 +1,6 @@
 # Document Q&A Web Application (AskMyPDF)
 
-This project is a web application where users can upload documents and ask questions about the content of those documents. The application uses Retrieval-Augmented Generation (RAG) with LangChain, OpenAI's GPT-4o model, and Pinecone vector database for embeddings. It also incorporates Firebase Firestore for storing user chats and documents, and Clerk for user authentication.
+AskMyPDF is a web application where users can upload documents and ask questions about the content of those documents. The application uses Retrieval-Augmented Generation (RAG) with LangChain, OpenAI's GPT-4o model, and Pinecone vector database for embeddings. It also incorporates Firebase Firestore for storing user chats and documents, and Clerk for user authentication.
 
 ## Features
 
